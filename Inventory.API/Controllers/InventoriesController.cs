@@ -1,4 +1,5 @@
 using Inventory.API.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,6 +7,7 @@ namespace Inventory.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize("ClientIdPolicy")]
     public class InventoriesController : ControllerBase
     {
         private readonly InventoriesContext _context;
