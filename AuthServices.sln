@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory.API", "Inventory.API\Inventory.API.csproj", "{CEBC5F56-DC11-4E31-BD45-8D3858C035AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventories.API", "Inventories.API\Inventories.API.csproj", "{CEBC5F56-DC11-4E31-BD45-8D3858C035AB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer", "IdentityServer\IdentityServer.csproj", "{DD1BC851-85B2-4DC6-A0FA-04BED53E01B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventories.Client", "Inventories.Client\Inventories.Client.csproj", "{EC1F9980-410E-48F4-8BE2-E82340147D49}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,18 @@ Global
 		{DD1BC851-85B2-4DC6-A0FA-04BED53E01B3}.Release|x64.Build.0 = Release|Any CPU
 		{DD1BC851-85B2-4DC6-A0FA-04BED53E01B3}.Release|x86.ActiveCfg = Release|Any CPU
 		{DD1BC851-85B2-4DC6-A0FA-04BED53E01B3}.Release|x86.Build.0 = Release|Any CPU
+		{EC1F9980-410E-48F4-8BE2-E82340147D49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC1F9980-410E-48F4-8BE2-E82340147D49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC1F9980-410E-48F4-8BE2-E82340147D49}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EC1F9980-410E-48F4-8BE2-E82340147D49}.Debug|x64.Build.0 = Debug|Any CPU
+		{EC1F9980-410E-48F4-8BE2-E82340147D49}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EC1F9980-410E-48F4-8BE2-E82340147D49}.Debug|x86.Build.0 = Debug|Any CPU
+		{EC1F9980-410E-48F4-8BE2-E82340147D49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC1F9980-410E-48F4-8BE2-E82340147D49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC1F9980-410E-48F4-8BE2-E82340147D49}.Release|x64.ActiveCfg = Release|Any CPU
+		{EC1F9980-410E-48F4-8BE2-E82340147D49}.Release|x64.Build.0 = Release|Any CPU
+		{EC1F9980-410E-48F4-8BE2-E82340147D49}.Release|x86.ActiveCfg = Release|Any CPU
+		{EC1F9980-410E-48F4-8BE2-E82340147D49}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

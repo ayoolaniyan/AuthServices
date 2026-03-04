@@ -34,11 +34,11 @@ namespace IdentityServer
                        AllowRememberConsent = false,
                        RedirectUris = new List<string>()
                        {
-                           "https://localhost:5002/signin-oidc"
+                           "https://localhost:5181/signin-oidc"
                        },
                        PostLogoutRedirectUris = new List<string>()
                        {
-                           "https://localhost:5002/signout-callback-oidc"
+                           "https://localhost:5181/signout-callback-oidc"
                        },
                        ClientSecrets = new List<Secret>
                        {
@@ -87,12 +87,12 @@ namespace IdentityServer
                 new TestUser
                 {
                     SubjectId = "5BE86359-073C-434B-AD2D-A3932222DABE",
-                    Username = "mehmet",
-                    Password = "swn",
+                    Username = "green",
+                    Password = "root",
                     Claims = new List<Claim>
                     {
-                        new Claim(JwtClaimTypes.GivenName, "mehmet"),
-                        new Claim(JwtClaimTypes.FamilyName, "ozkaya")
+                        new Claim(JwtClaimTypes.GivenName, "green"),
+                        new Claim(JwtClaimTypes.FamilyName, "brown")
                     }
                 }
             };

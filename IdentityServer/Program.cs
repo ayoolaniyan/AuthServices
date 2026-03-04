@@ -3,18 +3,28 @@ using IdentityServer;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddIdentityServer()
+builder.Services.AddControllersWithViews();    
+builder.Services.AddRazorPages();
+
+builder.Services
+    .AddIdentityServer(options =>
+    {
+        options.KeyManagement.Enabled = false;
+    })
     .AddInMemoryClients(Config.Clients)
-    // .AddInMemoryIdentityResources(Config.IdentityResources)
-    // .AddInMemoryApiResources(Config.ApiResources)
     .AddInMemoryApiScopes(Config.ApiScopes)
-    // .AddTestUsers(Config.TestUsers)
+    .AddInMemoryIdentityResources(Config.IdentityResources)
+    // .AddInMemoryApiResources(Config.ApiResources)
+    .AddTestUsers(Config.TestUsers)
     .AddDeveloperSigningCredential();
 
 var app = builder.Build();
 
+app.UseStaticFiles();
+app.UseRouting();
 app.UseIdentityServer();
-
-app.MapGet("/", () => "Hello World!");
+app.UseAuthorization();
+app.MapRazorPages();
+app.MapDefaultControllerRoute();
 
 app.Run();

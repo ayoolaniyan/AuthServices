@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "https": {
+    "IdentityServer": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

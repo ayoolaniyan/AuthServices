@@ -1,0 +1,5 @@
+@Inventories.API_HostAddress = https://localhost:5017
+
+Accept: application/json
+
+###
