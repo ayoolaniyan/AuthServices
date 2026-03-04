@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Inventories.Client.Models;
 
-namespace Inventories.Client.ApiService
+namespace Inventories.Client.ApiServices
 {
     public interface IInventoryApiService
     {

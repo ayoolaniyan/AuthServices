@@ -1,14 +1,21 @@
 using Microsoft.AspNetCore.Mvc;
-using Inventories.Client.ApiService;
+using Inventories.Client.ApiServices;
 using Inventories.Client.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using System.Diagnostics;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
 namespace Inventories.Client.Controllers
 {
+    [Authorize]
     public class InventoriesController : Controller
     {
-        private InventoryApiService _inventoryApiService;
+        private IInventoryApiService _inventoryApiService;
 
-        public InventoriesController(InventoryApiService inventoryApiService)
+        public InventoriesController(IInventoryApiService inventoryApiService)
         {
             _inventoryApiService = inventoryApiService ?? throw new ArgumentNullException(nameof(inventoryApiService));
         }
@@ -16,24 +23,25 @@ namespace Inventories.Client.Controllers
         // GET: Inventories
         public async Task<IActionResult> Index()
         {
+            await LogTokenAndClaims();
             return View(await _inventoryApiService.GetInventories());
+        }
+
+        public async Task LogTokenAndClaims()
+        {
+            var identityToken = await HttpContext.GetTokenAsync(OpenIdConnectParameterNames.IdToken);
+
+            Debug.WriteLine($"Identity token: {identityToken}");
+
+            foreach (var claim in User.Claims)
+            {
+                Debug.WriteLine($"Claim type: {claim.Type} - Claim value: {claim.Value}");
+            }
         }
 
         // GET: Inventories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            // if (id == null)
-            // {
-            //     return NotFound();
-            // }
-
-            // var inventory = await _context.Inventory
-            //     .FirstOrDefaultAsync(m => m.Id == id);
-            // if (inventory == null)
-            // {
-            //     return NotFound();
-            // }
-
             return View();
         }
 
@@ -44,87 +52,30 @@ namespace Inventories.Client.Controllers
         }
 
         // POST: Inventories/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,Genre,Rating,ReleaseDate,ImageUrl,Owner")] Inventory inventory)
         {
-            // if (ModelState.IsValid)
-            // {
-            //     _context.Add(inventory);
-            //     await _context.SaveChangesAsync();
-            //     return RedirectToAction(nameof(Index));
-            // }
             return View();
         }
 
         // GET: Inventories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            // if (id == null)
-            // {
-            //     return NotFound();
-            // }
-
-            // var inventory = await _context.Inventory.FindAsync(id);
-            // if (inventory == null)
-            // {
-            //     return NotFound();
-            // }
             return View();
         }
 
         // POST: Inventories/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Genre,Rating,ReleaseDate,ImageUrl,Owner")] Inventory inventory)
         {
-            // if (id != inventory.Id)
-            // {
-            //     return NotFound();
-            // }
-
-            // if (ModelState.IsValid)
-            // {
-            //     try
-            //     {
-            //         _context.Update(inventory);
-            //         await _context.SaveChangesAsync();
-            //     }
-            //     catch (DbUpdateConcurrencyException)
-            //     {
-            //         if (!InventoryExists(inventory.Id))
-            //         {
-            //             return NotFound();
-            //         }
-            //         else
-            //         {
-            //             throw;
-            //         }
-            //     }
-            //     return RedirectToAction(nameof(Index));
-            // }
             return View();
         }
 
         // GET: Inventories/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            // if (id == null)
-            // {
-            //     return NotFound();
-            // }
-
-            // var inventory = await _context.Inventory
-            //     .FirstOrDefaultAsync(m => m.Id == id);
-            // if (inventory == null)
-            // {
-            //     return NotFound();
-            // }
-
             return View();
         }
 
@@ -134,19 +85,16 @@ namespace Inventories.Client.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             return View();
-            // var inventory = await _context.Inventory.FindAsync(id);
-            // if (inventory != null)
-            // {
-            //     _context.Inventory.Remove(inventory);
-            // }
+        }
 
-            // await _context.SaveChangesAsync();
-            // return RedirectToAction(nameof(Index));
+        public async Task Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);            
         }
 
         private bool InventoryExists(int id)
         {
-            // return _context.Inventory.Any(e => e.Id == id);
             return true;
         }
     }
