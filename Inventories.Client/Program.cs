@@ -1,10 +1,9 @@
-using Microsoft.Extensions.DependencyInjection;
 using Inventories.Client.ApiServices;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.IdentityModel.Tokens;
-using Duende.IdentityModel;
+using Microsoft.Net.Http.Headers;
+using Inventories.Client.HttpHandlers;
+using Duende.IdentityModel.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +31,32 @@ builder.Services.AddAuthentication(options =>
         options.SaveTokens = true;
         options.GetClaimsFromUserInfoEndpoint = true;
     });
+
+// 1 create an HttpClient used for accessing the Movies.API
+builder.Services.AddTransient<AuthenticationDelegatingHandler>();
+           
+builder.Services.AddHttpClient("InventoryAPIClient", client =>
+{
+    client.BaseAddress = new Uri("https://localhost:5017/"); // API GATEWAY URL
+    client.DefaultRequestHeaders.Clear();
+    client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+}).AddHttpMessageHandler<AuthenticationDelegatingHandler>();
+
+// 2 create an HttpClient used for accessing the IDP
+builder.Services.AddHttpClient("IDPClient", client =>
+{
+    client.BaseAddress = new Uri("https://localhost:5203/");
+    client.DefaultRequestHeaders.Clear();
+    client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+});
+
+builder.Services.AddSingleton(new ClientCredentialsTokenRequest
+{                                                
+   Address = "https://localhost:5203/connect/token",
+   ClientId = "inventoryClient",
+   ClientSecret = "secret",
+   Scope = "inventoryAPI"
+});
 
 var app = builder.Build();
 
