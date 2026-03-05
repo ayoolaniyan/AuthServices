@@ -23,10 +23,11 @@ builder.Services.AddAuthentication(options =>
 
         options.ClientId = "inventories_mvc_client";
         options.ClientSecret = "secret";
-        options.ResponseType = "code";
+        options.ResponseType = "code id_token";
 
         options.Scope.Add("openid");
         options.Scope.Add("profile");
+        options.Scope.Add("inventoryAPI");
 
         options.SaveTokens = true;
         options.GetClaimsFromUserInfoEndpoint = true;
@@ -50,13 +51,15 @@ builder.Services.AddHttpClient("IDPClient", client =>
     client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
 });
 
-builder.Services.AddSingleton(new ClientCredentialsTokenRequest
-{                                                
-   Address = "https://localhost:5203/connect/token",
-   ClientId = "inventoryClient",
-   ClientSecret = "secret",
-   Scope = "inventoryAPI"
-});
+builder.Services.AddHttpContextAccessor();
+
+// builder.Services.AddSingleton(new ClientCredentialsTokenRequest
+// {                                                
+//    Address = "https://localhost:5203/connect/token",
+//    ClientId = "inventoryClient",
+//    ClientSecret = "secret",
+//    Scope = "inventoryAPI"
+// });
 
 var app = builder.Build();
 

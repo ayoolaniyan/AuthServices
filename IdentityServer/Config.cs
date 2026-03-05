@@ -29,7 +29,7 @@ namespace IdentityServer
                    {
                        ClientId = "inventories_mvc_client",
                        ClientName = "Inventory MVC Web App",
-                       AllowedGrantTypes = GrantTypes.Code,
+                       AllowedGrantTypes = GrantTypes.Hybrid,
                        RequirePkce = false,
                        AllowRememberConsent = false,
                        RedirectUris = new List<string>()
