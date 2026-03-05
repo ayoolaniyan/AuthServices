@@ -20,6 +20,12 @@ namespace Inventories.Client.Controllers
             _inventoryApiService = inventoryApiService ?? throw new ArgumentNullException(nameof(inventoryApiService));
         }
 
+        // GET: Inventories
+        public async Task<IActionResult> Index()
+        {
+            await LogTokenAndClaims();
+            return View(await _inventoryApiService.GetInventories());
+        }
         public async Task LogTokenAndClaims()
         {
             var identityToken = await HttpContext.GetTokenAsync(OpenIdConnectParameterNames.IdToken);
@@ -32,11 +38,11 @@ namespace Inventories.Client.Controllers
             }
         }
 
-        // GET: Inventories
-        public async Task<IActionResult> Index()
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> OnlyAdmin()
         {
-            await LogTokenAndClaims();
-            return View(await _inventoryApiService.GetInventories());
+            var userInfo = await _inventoryApiService.GetUserInfo();
+            return View(userInfo);            
         }
 
         // GET: Inventories/Details/5
