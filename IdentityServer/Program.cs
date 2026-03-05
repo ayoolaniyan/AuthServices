@@ -14,7 +14,6 @@ builder.Services
     .AddInMemoryClients(Config.Clients)
     .AddInMemoryApiScopes(Config.ApiScopes)
     .AddInMemoryIdentityResources(Config.IdentityResources)
-    // .AddInMemoryApiResources(Config.ApiResources)
     .AddTestUsers(Config.TestUsers)
     .AddDeveloperSigningCredential();
 
