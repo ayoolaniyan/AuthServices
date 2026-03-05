@@ -1,5 +1,6 @@
 using Duende.IdentityServer.Models;
 using IdentityServer;
+using IdentityServerHost.Quickstart.UI;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +15,7 @@ builder.Services
     .AddInMemoryClients(Config.Clients)
     .AddInMemoryApiScopes(Config.ApiScopes)
     .AddInMemoryIdentityResources(Config.IdentityResources)
-    .AddTestUsers(Config.TestUsers)
+    .AddTestUsers(TestUsers.Users)
     .AddDeveloperSigningCredential();
 
 var app = builder.Build();

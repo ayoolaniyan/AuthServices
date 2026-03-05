@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Net.Http.Headers;
 using Inventories.Client.HttpHandlers;
 using Duende.IdentityModel.Client;
+using Microsoft.IdentityModel.Tokens;
+using Duende.IdentityModel;
+using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,12 +28,23 @@ builder.Services.AddAuthentication(options =>
         options.ClientSecret = "secret";
         options.ResponseType = "code id_token";
 
-        options.Scope.Add("openid");
-        options.Scope.Add("profile");
+        // options.Scope.Add("openid");
+        // options.Scope.Add("profile");
+        options.Scope.Add("address");
+        options.Scope.Add("email");
         options.Scope.Add("inventoryAPI");
+        options.Scope.Add("roles");
+
+        options.ClaimActions.MapUniqueJsonKey("role", "role");
 
         options.SaveTokens = true;
         options.GetClaimsFromUserInfoEndpoint = true;
+
+        options.TokenValidationParameters = new TokenValidationParameters
+        {                       
+            NameClaimType = JwtClaimTypes.GivenName,
+            RoleClaimType = JwtClaimTypes.Role
+        };
     });
 
 // 1 create an HttpClient used for accessing the Movies.API

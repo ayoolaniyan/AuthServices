@@ -13,6 +13,6 @@ namespace Inventories.Client.ApiServices
         Task<Inventory> CreateInventory(Inventory inventory);
         Task<Inventory> UpdateInventory(Inventory inventory);
         Task DeleteInventory(int id);
-        // Task<UserInfoViewModel> GetUserInfo();
+        Task<UserInfoViewModel> GetUserInfo();
     }
 }
