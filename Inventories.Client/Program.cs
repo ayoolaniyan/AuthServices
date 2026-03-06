@@ -52,7 +52,7 @@ builder.Services.AddTransient<AuthenticationDelegatingHandler>();
            
 builder.Services.AddHttpClient("InventoryAPIClient", client =>
 {
-    client.BaseAddress = new Uri("https://localhost:5017/"); // API GATEWAY URL
+    client.BaseAddress = new Uri("https://localhost:7232/"); // API GATEWAY URL
     client.DefaultRequestHeaders.Clear();
     client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
 }).AddHttpMessageHandler<AuthenticationDelegatingHandler>();
