@@ -21,7 +21,7 @@ namespace Inventories.Client.ApiServices
         {
             var httpClient = _httpClientFactory.CreateClient("InventoryAPIClient");
 
-            var request = new HttpRequestMessage(HttpMethod.Get, "api/Inventories");
+            var request = new HttpRequestMessage(HttpMethod.Get, "/Inventories");
 
             var response = await httpClient.SendAsync(
                 request, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
